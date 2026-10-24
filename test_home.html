@@ -1,0 +1,375 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Connect - Urban Services Marketplace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #0ea5e9;
+            --dark: #0f172a;
+            --surface: #ffffff;
+            --background: #f8fafc;
+            --border: #e2e8f0;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            background-color: var(--background);
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-content {
+            flex: 1 0 auto;
+        }
+        .navbar-custom {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 0.85rem 0;
+        }
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.35rem;
+            letter-spacing: -0.02em;
+            color: #fff !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .navbar-brand i {
+            color: #818cf8;
+            font-size: 1.5rem;
+        }
+        .nav-link {
+            font-weight: 500;
+            color: #cbd5e1 !important;
+            padding: 0.5rem 0.9rem !important;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #ffffff !important;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .badge-role {
+            font-size: 0.75rem;
+            padding: 0.35rem 0.65rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 700;
+        }
+        .badge-admin { background: #fee2e2; color: #dc2626; }
+        .badge-provider { background: #fef3c7; color: #d97706; }
+        .badge-customer { background: #dcfce7; color: #16a34a; }
+        
+        .card-modern {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-modern:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.1), 0 8px 10px -6px rgba(79, 70, 229, 0.05);
+            border-color: #c7d2fe;
+        }
+        .stat-card {
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(79, 70, 229, 0.12);
+        }
+        .btn-primary-custom {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 0.55rem 1.25rem;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary-custom:hover {
+            background: var(--primary-hover);
+            border-color: var(--primary-hover);
+            color: white;
+            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
+            transform: translateY(-2px);
+        }
+        .btn-primary-custom:active {
+            transform: translateY(0);
+        }
+        .category-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.1rem;
+            border-radius: 10px;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            color: #334155;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .category-pill:hover {
+            background: #eef2ff;
+            border-color: #818cf8;
+            color: var(--primary);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.15);
+        }
+        
+        /* Smooth Global Page Entrance Animation */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.99);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        .container.main-content {
+            animation: fadeInScale 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Pulse Badge Animation */
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+        }
+        .pulse-badge {
+            animation: pulseGlow 2s infinite;
+        }
+
+        /* Smooth Alert Entrance */
+        .alert {
+            animation: fadeInScale 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="bi bi-tools"></i> Service Connect
+        </a>
+        <button class="navbar-toggler text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/"><i class="bi bi-house me-1"></i> Home</a>
+                </li>
+                            </ul>
+
+            <div class="navbar-nav ms-auto align-items-center gap-2">
+                                    <a class="nav-link" href="/auth/login"><i class="bi bi-box-arrow-in-right me-1"></i> Login</a>
+                    <a class="btn btn-sm btn-primary-custom" href="/auth/register">Get Started</a>
+                            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container main-content mt-4 mb-5">
+        <div class="p-5 mb-5 rounded-4 text-white position-relative overflow-hidden shadow" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);">
+    <div class="row align-items-center py-3">
+        <div class="col-lg-7">
+            <span class="badge bg-white text-primary px-3 py-2 rounded-pill fw-bold mb-3 shadow-sm">
+                <i class="bi bi-stars text-warning me-1"></i> Trusted Local Home Services
+            </span>
+            <h1 class="display-4 fw-extrabold mb-3" style="letter-spacing: -0.03em;">Book Top Rated Home Services in Seconds</h1>
+            <p class="fs-5 text-light opacity-90 mb-4">
+                From electricians and plumbers to full home repair, connect with verified professionals in your city today.
+            </p>
+            <form method="GET" action="/customer/search" class="d-flex gap-2 bg-white p-2 rounded-pill shadow-lg max-w-lg">
+                <input type="text" name="q" class="form-control border-0 shadow-none px-3 py-2 rounded-pill" placeholder="What service do you need? (e.g. Wiring, Plumber)">
+                <button type="submit" class="btn btn-primary-custom rounded-pill px-4">
+                    <i class="bi bi-search me-1"></i> Search
+                </button>
+            </form>
+        </div>
+        <div class="col-lg-5 text-center d-none d-lg-block">
+            <div class="p-4 rounded-4 bg-white text-dark shadow-lg mx-auto" style="max-width: 380px;">
+                <div class="d-flex align-items-center gap-3 mb-3 text-start">
+                    <div class="bg-primary-subtle text-primary p-3 rounded-circle fs-3">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold">100% Verified Experts</h6>
+                        <small class="text-muted">Background-checked & certified</small>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-3 mb-3 text-start">
+                    <div class="bg-success-subtle text-success p-3 rounded-circle fs-3">
+                        <i class="bi bi-clock-history"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold">Instant Booking & Slots</h6>
+                        <small class="text-muted">Choose your preferred date & time</small>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-3 text-start">
+                    <div class="bg-warning-subtle text-warning p-3 rounded-circle fs-3">
+                        <i class="bi bi-wallet2"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0 fw-bold">Transparent Pricing</h6>
+                        <small class="text-muted">Upfront costs & automated invoices</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Category Carousel/Grid -->
+<div class="mb-5">
+    <div class="d-flex justify-content-between align-items-end mb-3">
+        <div>
+            <h3 class="fw-bold mb-1">Browse Categories</h3>
+            <p class="text-muted mb-0">Select a category to view specialized services</p>
+        </div>
+        <a href="/customer/search" class="text-primary fw-semibold text-decoration-none">View All <i class="bi bi-arrow-right"></i></a>
+    </div>
+
+    <div class="row g-3">
+                    <div class="col-6 col-md-4 col-lg-3">
+                <a href="/customer/search?category=ac-repair" class="card card-modern p-3 text-decoration-none text-dark h-100 d-flex flex-column align-items-center text-center">
+                    <div class="p-3 bg-primary-subtle text-primary rounded-circle mb-3 fs-2">
+                        <i class="bi bi-wind"></i>
+                    </div>
+                    <h6 class="fw-bold mb-1">AC Repair</h6>
+                    <small class="text-muted">Explore specialists</small>
+                </a>
+            </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                <a href="/customer/search?category=cleaning" class="card card-modern p-3 text-decoration-none text-dark h-100 d-flex flex-column align-items-center text-center">
+                    <div class="p-3 bg-primary-subtle text-primary rounded-circle mb-3 fs-2">
+                        <i class="bi bi-bucket"></i>
+                    </div>
+                    <h6 class="fw-bold mb-1">Cleaning</h6>
+                    <small class="text-muted">Explore specialists</small>
+                </a>
+            </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                <a href="/customer/search?category=painter" class="card card-modern p-3 text-decoration-none text-dark h-100 d-flex flex-column align-items-center text-center">
+                    <div class="p-3 bg-primary-subtle text-primary rounded-circle mb-3 fs-2">
+                        <i class="bi bi-brush"></i>
+                    </div>
+                    <h6 class="fw-bold mb-1">Painter</h6>
+                    <small class="text-muted">Explore specialists</small>
+                </a>
+            </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                <a href="/customer/search?category=carpenter" class="card card-modern p-3 text-decoration-none text-dark h-100 d-flex flex-column align-items-center text-center">
+                    <div class="p-3 bg-primary-subtle text-primary rounded-circle mb-3 fs-2">
+                        <i class="bi bi-tools"></i>
+                    </div>
+                    <h6 class="fw-bold mb-1">Carpenter</h6>
+                    <small class="text-muted">Explore specialists</small>
+                </a>
+            </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                <a href="/customer/search?category=plumber" class="card card-modern p-3 text-decoration-none text-dark h-100 d-flex flex-column align-items-center text-center">
+                    <div class="p-3 bg-primary-subtle text-primary rounded-circle mb-3 fs-2">
+                        <i class="bi bi-wrench-adjustable"></i>
+                    </div>
+                    <h6 class="fw-bold mb-1">Plumber</h6>
+                    <small class="text-muted">Explore specialists</small>
+                </a>
+            </div>
+                    <div class="col-6 col-md-4 col-lg-3">
+                <a href="/customer/search?category=electrician" class="card card-modern p-3 text-decoration-none text-dark h-100 d-flex flex-column align-items-center text-center">
+                    <div class="p-3 bg-primary-subtle text-primary rounded-circle mb-3 fs-2">
+                        <i class="bi bi-lightning-charge"></i>
+                    </div>
+                    <h6 class="fw-bold mb-1">Electrician</h6>
+                    <small class="text-muted">Explore specialists</small>
+                </a>
+            </div>
+            </div>
+</div>
+
+<!-- Test Credentials Box -->
+<div class="card card-modern border-primary border-opacity-25 bg-white p-4 mb-5">
+    <div class="d-flex align-items-center gap-2 mb-3">
+        <i class="bi bi-key-fill text-primary fs-4"></i>
+        <h5 class="fw-bold mb-0">Quick Demo Logins (Seed Accounts)</h5>
+    </div>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="p-3 rounded-3 bg-light border">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <strong class="text-danger"><i class="bi bi-shield-lock me-1"></i> Admin</strong>
+                    <span class="badge bg-danger">Full Control</span>
+                </div>
+                <div class="small text-muted">admin@serviceconnect.com</div>
+                <div class="small text-muted mb-2">Password: <code>Admin@123</code></div>
+                <a href="/auth/login" class="btn btn-sm btn-outline-danger w-100">Login as Admin</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 rounded-3 bg-light border">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <strong class="text-warning"><i class="bi bi-tools me-1"></i> Provider</strong>
+                    <span class="badge bg-warning text-dark">Services & Orders</span>
+                </div>
+                <div class="small text-muted">provider@serviceconnect.com</div>
+                <div class="small text-muted mb-2">Password: <code>Provider@123</code></div>
+                <a href="/auth/login" class="btn btn-sm btn-outline-warning w-100">Login as Provider</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 rounded-3 bg-light border">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <strong class="text-success"><i class="bi bi-person me-1"></i> Customer</strong>
+                    <span class="badge bg-success">Book & Review</span>
+                </div>
+                <div class="small text-muted">customer@serviceconnect.com</div>
+                <div class="small text-muted mb-2">Password: <code>Customer@123</code></div>
+                <a href="/auth/login" class="btn btn-sm btn-outline-success w-100">Login as Customer</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<footer class="bg-white border-top py-4 mt-auto">
+    <div class="container text-center text-muted small">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div>
+                <strong>Service Connect</strong> &copy; 2026 &mdash; On-Demand Household Services Platform
+            </div>
+            <div class="d-flex gap-3">
+                <span class="badge bg-light text-dark border"><i class="bi bi-circle-fill text-success me-1" style="font-size:0.6rem;"></i> Localhost Live</span>
+                <span><i class="bi bi-database text-primary me-1"></i> Neon PostgreSQL Connected</span>
+                <span>PHP 8.2</span>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
