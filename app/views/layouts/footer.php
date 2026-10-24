@@ -7,7 +7,7 @@
             </div>
             <div class="d-flex gap-3">
                 <span class="badge bg-light text-dark border"><i class="bi bi-circle-fill text-success me-1" style="font-size:0.6rem;"></i> Localhost Live</span>
-                <span>MongoDB Connected</span>
+                <span><i class="bi bi-database text-primary me-1"></i> <?= (\Config\Database::getDriver() === 'postgres') ? 'Neon PostgreSQL' : 'MongoDB' ?> Connected</span>
                 <span>PHP 8.2</span>
             </div>
         </div>

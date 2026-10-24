@@ -26,6 +26,8 @@ $content = $content -replace ';extension=mbstring', 'extension=mbstring'
 $content = $content -replace ';extension=openssl', 'extension=openssl'
 $content = $content -replace ';extension=fileinfo', 'extension=fileinfo'
 $content = $content -replace ';extension=zip', 'extension=zip'
+$content = $content -replace ';extension=pdo_pgsql', 'extension=pdo_pgsql'
+$content = $content -replace ';extension=pgsql', 'extension=pgsql'
 
 if ($content -notmatch 'extension=mongodb') {
     $content += "`nextension=mongodb`n"
