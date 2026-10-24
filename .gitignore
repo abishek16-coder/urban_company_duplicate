@@ -1,0 +1,15 @@
+# Dependencies
+/vendor/
+composer.phar
+
+# MongoDB Data and Server Binaries
+/data/
+/mongodb_srv/
+*.zip
+
+# Environment & Logs
+.env
+*.log
+
+# Temporary and extraction scripts
+extract_mongo.ps1
